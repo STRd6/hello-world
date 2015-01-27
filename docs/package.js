@@ -173,7 +173,12 @@
     },
     "main.coffee.md": {
       "path": "main.coffee.md",
-      "content": "# Hello World\r\n\r\nWelcome to HyperWeb. Where you can create clientside applications easier and\r\nbetter than ever before.\r\n\r\n    # main.coffee.md\r\n\r\n## Require\r\n\r\nYou can require other files just like you do in Node or other server-side\r\nenvironments.\r\n\r\nHere we are requiring a Hamlet template file.\r\n\r\n    Template = require \"./template\"\r\n\r\n## Templates\r\n\r\nA template is a function that returns a DOM node when invoked. Here we are\r\npassing data for the template to fill in.\r\n\r\n    element = Template\r\n      name: \"World\"\r\n\r\n## Writing to the HTML Document\r\n\r\nThe simplest way to add to the document is to append a child to the body node.\r\n\r\n    document.body.appendChild element\r\n",
+      "content": "# Hello World\r\n\r\nWelcome to HyperWeb. Where you can create clientside applications easier and\r\nbetter than ever before.\r\n\r\n    # main.coffee.md\r\n\r\n## Require\r\n\r\nYou can require other files just like you do in Node or other server-side\r\nenvironments.\r\n\r\nHere we are requiring a Hamlet template file.\r\n\r\n    Template = require \"./template\"\r\n\r\n## Templates\r\n\r\nA template is a function that returns a DOM node when invoked. Here we are\r\npassing data for the template to fill in.\r\n\r\n    element = Template\r\n      name: \"World\"\r\n\r\n## Writing to the HTML Document\r\n\r\nThe simplest way to add to the document is to append a child to the body node.\r\n\r\n    document.body.appendChild element\r\n\r\n## Styling the HTML Document\r\n\r\nTo apply a stylesheet to your document you can create a `style` node.\r\n\r\nHere we use a .styl file, which compiles into css text that we then attach to\r\nthe document head.\r\n\r\n    style = document.createElement \"style\"\r\n    style.innerText = require \"./style\"\r\n\r\n    document.head.appendChild style\r\n",
+      "mode": "100644"
+    },
+    "style.styl": {
+      "path": "style.styl",
+      "content": "*\r\n  box-sizing: border-box\r\n\r\nhtml, body\r\n  height: 100%\r\n\r\nbody\r\n  font-family: \"HelveticaNeue-Light\", \"Helvetica Neue Light\", \"Helvetica Neue\", Helvetica, Arial, \"Lucida Grande\", sans-serif\r\n  font-weight: 300\r\n  color: #444\r\n  margin: 1em\r\n",
       "mode": "100644"
     }
   },
@@ -185,7 +190,12 @@
     },
     "main": {
       "path": "main",
-      "content": "(function() {\n  var Template, element;\n\n  Template = require(\"./template\");\n\n  element = Template({\n    name: \"World\"\n  });\n\n  document.body.appendChild(element);\n\n}).call(this);\n",
+      "content": "(function() {\n  var Template, element, style;\n\n  Template = require(\"./template\");\n\n  element = Template({\n    name: \"World\"\n  });\n\n  document.body.appendChild(element);\n\n  style = document.createElement(\"style\");\n\n  style.innerText = require(\"./style\");\n\n  document.head.appendChild(style);\n\n}).call(this);\n",
+      "type": "blob"
+    },
+    "style": {
+      "path": "style",
+      "content": "module.exports = \"* {\\n  -ms-box-sizing: border-box;\\n  -moz-box-sizing: border-box;\\n  -webkit-box-sizing: border-box;\\n  box-sizing: border-box;\\n}\\n\\nhtml,\\nbody {\\n  height: 100%;\\n}\\n\\nbody {\\n  font-family: \\\"HelveticaNeue-Light\\\", \\\"Helvetica Neue Light\\\", \\\"Helvetica Neue\\\", Helvetica, Arial, \\\"Lucida Grande\\\", sans-serif;\\n  font-weight: 300;\\n  color: #444;\\n  margin: 1em;\\n}\";",
       "type": "blob"
     },
     "lib/hamlet-runtime": {
