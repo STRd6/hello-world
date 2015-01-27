@@ -27,3 +27,15 @@ passing data for the template to fill in.
 The simplest way to add to the document is to append a child to the body node.
 
     document.body.appendChild element
+
+## Styling the HTML Document
+
+To apply a stylesheet to your document you can create a `style` node.
+
+Here we use a .styl file, which compiles into css text that we then attach to
+the document head.
+
+    style = document.createElement "style"
+    style.innerText = require "./style"
+
+    document.head.appendChild style
