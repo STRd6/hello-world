@@ -1,0 +1,5 @@
+remoteDependencies: [
+  "https://code.jquery.com/jquery-1.11.0.min.js"
+]
+dependencies:
+  observable: "distri/observable:v0.3.1"

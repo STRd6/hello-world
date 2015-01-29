@@ -1,0 +1,8 @@
+.flickr
+  %h2 Flickr Search
+  %form(@submit)
+    %input(value=@query)
+    %button Go
+  .results
+    - @urls.forEach (url) ->
+      %img(src=url)

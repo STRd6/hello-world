@@ -39,3 +39,9 @@ the document head.
     style.innerText = require "./style"
 
     document.head.appendChild style
+
+## Flickr Search
+
+    Flickr = require "./flickr"
+    FlickrTemplate = require "./templates/flickr"
+    document.body.appendChild FlickrTemplate Flickr()
