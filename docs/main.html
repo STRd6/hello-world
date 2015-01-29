@@ -83,6 +83,7 @@ passing data for the template to fill in.</p>
 <p>To apply a stylesheet to your document you can create a <code>style</code> node.</p>
 <p>Here we use a .styl file, which compiles into css text that we then attach to
 the document head.</p>
+<p>You can modify the style yourself in <code>style.styl</code></p>
 
             </div>
             <div class="content"><pre><code class="lang-coffeescript">style = document.createElement <span class="string">"style"</span>
@@ -99,6 +100,8 @@ document.head.appendChild style</code></pre>
                 <a class="pilcrow" href="#section-6">&#182;</a>
               </div>
               <h2 id="flickr-search">Flickr Search</h2>
+<p>Here we require a model and a template then combine them to create an element
+to add to the DOM that let&#39;s us search Flikr using their JSON API.</p>
 
             </div>
             <div class="content"><pre><code class="lang-coffeescript">Flickr = require <span class="string">"./flickr"</span>
