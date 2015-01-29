@@ -35,12 +35,17 @@ To apply a stylesheet to your document you can create a `style` node.
 Here we use a .styl file, which compiles into css text that we then attach to
 the document head.
 
+You can modify the style yourself in `style.styl`
+
     style = document.createElement "style"
     style.innerText = require "./style"
 
     document.head.appendChild style
 
 ## Flickr Search
+
+Here we require a model and a template then combine them to create an element
+to add to the DOM that let's us search Flikr using their JSON API.
 
     Flickr = require "./flickr"
     FlickrTemplate = require "./templates/flickr"
