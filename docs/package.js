@@ -166,9 +166,21 @@
   window.require = Require.generateFor(pkg);
 })({
   "source": {
+    "flickr.coffee": {
+      "path": "flickr.coffee",
+      "content": "# This package is declared in `pixie.cson`\n# We require it using the name defined there\nObservable = require \"observable\"\n\n# Here we export the constructor for our model\nmodule.exports = ->\n  self =\n    query: Observable \"\"\n    urls: Observable []\n    submit: (e) ->\n      e.preventDefault()\n\n      flickrAPI = \"http://api.flickr.com/services/feeds/photos_public.gne?jsoncallback=?\";\n  \n      $.getJSON flickrAPI,\n        tags: self.query()\n        tagmode: \"any\"\n        format: \"json\"\n      .then (data) ->\n        self.urls data.items.map (item) ->\n          item.media.m\n",
+      "mode": "100644",
+      "type": "blob"
+    },
     "main.coffee.md": {
       "path": "main.coffee.md",
       "content": "# Hello World\r\n\r\nWelcome to HyperWeb. Where you can create clientside applications easier and\r\nbetter than ever before.\r\n\r\n    # main.coffee.md\r\n\r\n## Require\r\n\r\nYou can require other files just like you do in Node or other server-side\r\nenvironments.\r\n\r\nHere we are requiring a Hamlet template file.\r\n\r\n    Template = require \"./template\"\r\n\r\n## Templates\r\n\r\nA template is a function that returns a DOM node when invoked. Here we are\r\npassing data for the template to fill in.\r\n\r\n    element = Template\r\n      name: \"World\"\r\n\r\n## Writing to the HTML Document\r\n\r\nThe simplest way to add to the document is to append a child to the body node.\r\n\r\n    document.body.appendChild element\r\n\r\n## Styling the HTML Document\r\n\r\nTo apply a stylesheet to your document you can create a `style` node.\r\n\r\nHere we use a .styl file, which compiles into css text that we then attach to\r\nthe document head.\r\n\r\nYou can modify the style yourself in `style.styl`\r\n\r\n    style = document.createElement \"style\"\r\n    style.innerText = require \"./style\"\r\n\r\n    document.head.appendChild style\r\n\r\n## Flickr Search\r\n\r\nHere we require a model and a template then combine them to create an element\r\nto add to the DOM that let's us search Flikr using their JSON API.\r\n\r\n    Flickr = require \"./flickr\"\r\n    FlickrTemplate = require \"./templates/flickr\"\r\n    document.body.appendChild FlickrTemplate Flickr()\r\n",
+      "mode": "100644",
+      "type": "blob"
+    },
+    "pixie.cson": {
+      "path": "pixie.cson",
+      "content": "remoteDependencies: [\n  \"https://code.jquery.com/jquery-1.11.0.min.js\"\n]\ndependencies:\n  observable: \"distri/observable:v0.3.1\"\n",
       "mode": "100644",
       "type": "blob"
     },
@@ -184,32 +196,33 @@
       "mode": "100644",
       "type": "blob"
     },
+    "templates/flickr.haml": {
+      "path": "templates/flickr.haml",
+      "content": ".flickr\n  %h2 Flickr Search Demo\n  %form(@submit)\n    %input(value=@query)\n    %button Go\n  .results\n    - @urls.forEach (url) ->\n      %img(src=url)\n",
+      "mode": "100644",
+      "type": "blob"
+    },
     "test/test.coffee": {
       "path": "test/test.coffee",
       "content": "describe \"Sample test\", ->\n  it \"should test something\", ->\n    assert true\n",
       "mode": "100644",
       "type": "blob"
-    },
-    "pixie.cson": {
-      "path": "pixie.cson",
-      "content": "remoteDependencies: [\n  \"https://code.jquery.com/jquery-1.11.0.min.js\"\n]\ndependencies:\n  observable: \"distri/observable:v0.3.1\"\n",
-      "mode": "100644"
-    },
-    "flickr.coffee": {
-      "path": "flickr.coffee",
-      "content": "# This package is declared in `pixie.cson`\n# We require it using the name defined there\nObservable = require \"observable\"\n\n# Here we export the constructor for our model\nmodule.exports = ->\n  self =\n    query: Observable \"\"\n    urls: Observable []\n    submit: (e) ->\n      e.preventDefault()\n\n      flickrAPI = \"http://api.flickr.com/services/feeds/photos_public.gne?jsoncallback=?\";\n  \n      $.getJSON flickrAPI,\n        tags: self.query()\n        tagmode: \"any\"\n        format: \"json\"\n      .then (data) ->\n        self.urls data.items.map (item) ->\n          item.media.m\n",
-      "mode": "100644"
-    },
-    "templates/flickr.haml": {
-      "path": "templates/flickr.haml",
-      "content": ".flickr\n  %h2 Flickr Search Demo\n  %form(@submit)\n    %input(value=@query)\n    %button Go\n  .results\n    - @urls.forEach (url) ->\n      %img(src=url)\n",
-      "mode": "100644"
     }
   },
   "distribution": {
+    "flickr": {
+      "path": "flickr",
+      "content": "(function() {\n  var Observable;\n\n  Observable = require(\"observable\");\n\n  module.exports = function() {\n    var self;\n    return self = {\n      query: Observable(\"\"),\n      urls: Observable([]),\n      submit: function(e) {\n        var flickrAPI;\n        e.preventDefault();\n        flickrAPI = \"http://api.flickr.com/services/feeds/photos_public.gne?jsoncallback=?\";\n        return $.getJSON(flickrAPI, {\n          tags: self.query(),\n          tagmode: \"any\",\n          format: \"json\"\n        }).then(function(data) {\n          return self.urls(data.items.map(function(item) {\n            return item.media.m;\n          }));\n        });\n      }\n    };\n  };\n\n}).call(this);\n",
+      "type": "blob"
+    },
     "main": {
       "path": "main",
       "content": "(function() {\n  var Flickr, FlickrTemplate, Template, element, style;\n\n  Template = require(\"./template\");\n\n  element = Template({\n    name: \"World\"\n  });\n\n  document.body.appendChild(element);\n\n  style = document.createElement(\"style\");\n\n  style.innerText = require(\"./style\");\n\n  document.head.appendChild(style);\n\n  Flickr = require(\"./flickr\");\n\n  FlickrTemplate = require(\"./templates/flickr\");\n\n  document.body.appendChild(FlickrTemplate(Flickr()));\n\n}).call(this);\n",
+      "type": "blob"
+    },
+    "pixie": {
+      "path": "pixie",
+      "content": "module.exports = {\"remoteDependencies\":[\"https://code.jquery.com/jquery-1.11.0.min.js\"],\"dependencies\":{\"observable\":\"distri/observable:v0.3.1\"}};",
       "type": "blob"
     },
     "style": {
@@ -222,24 +235,14 @@
       "content": "module.exports = function(data) {\n  \"use strict\";\n  return (function() {\n    var __root;\n    __root = require(\"/lib/hamlet-runtime\")(this);\n    __root.buffer(__root.element(\"div\", this, {}, function(__root) {\n      __root.buffer(__root.element(\"h1\", this, {}, function(__root) {\n        __root.buffer(\"Hello\\n\");\n      }));\n      __root.buffer(__root.element(\"p\", this, {}, function(__root) {\n        __root.buffer(this.name);\n      }));\n      __root.buffer(__root.element(\"h2\", this, {}, function(__root) {\n        __root.buffer(\"Welcome...\\n\");\n      }));\n      __root.buffer(__root.element(\"p\", this, {}, function(__root) {\n        __root.buffer(\"to the future!\\n\");\n      }));\n    }));\n    return __root.root;\n  }).call(data);\n};\n",
       "type": "blob"
     },
-    "test/test": {
-      "path": "test/test",
-      "content": "(function() {\n  describe(\"Sample test\", function() {\n    return it(\"should test something\", function() {\n      return assert(true);\n    });\n  });\n\n}).call(this);\n",
-      "type": "blob"
-    },
-    "pixie": {
-      "path": "pixie",
-      "content": "module.exports = {\"remoteDependencies\":[\"https://code.jquery.com/jquery-1.11.0.min.js\"],\"dependencies\":{\"observable\":\"distri/observable:v0.3.1\"}};",
-      "type": "blob"
-    },
-    "flickr": {
-      "path": "flickr",
-      "content": "(function() {\n  var Observable;\n\n  Observable = require(\"observable\");\n\n  module.exports = function() {\n    var self;\n    return self = {\n      query: Observable(\"\"),\n      urls: Observable([]),\n      submit: function(e) {\n        var flickrAPI;\n        e.preventDefault();\n        flickrAPI = \"http://api.flickr.com/services/feeds/photos_public.gne?jsoncallback=?\";\n        return $.getJSON(flickrAPI, {\n          tags: self.query(),\n          tagmode: \"any\",\n          format: \"json\"\n        }).then(function(data) {\n          return self.urls(data.items.map(function(item) {\n            return item.media.m;\n          }));\n        });\n      }\n    };\n  };\n\n}).call(this);\n",
-      "type": "blob"
-    },
     "templates/flickr": {
       "path": "templates/flickr",
       "content": "module.exports = function(data) {\n  \"use strict\";\n  return (function() {\n    var __root;\n    __root = require(\"/lib/hamlet-runtime\")(this);\n    __root.buffer(__root.element(\"div\", this, {\n      \"class\": [\"flickr\"]\n    }, function(__root) {\n      __root.buffer(__root.element(\"h2\", this, {}, function(__root) {\n        __root.buffer(\"Flickr Search Demo\\n\");\n      }));\n      __root.buffer(__root.element(\"form\", this, {\n        \"submit\": this.submit\n      }, function(__root) {\n        __root.buffer(__root.element(\"input\", this, {\n          \"value\": this.query\n        }, function(__root) {}));\n        __root.buffer(__root.element(\"button\", this, {}, function(__root) {\n          __root.buffer(\"Go\\n\");\n        }));\n      }));\n      __root.buffer(__root.element(\"div\", this, {\n        \"class\": [\"results\"]\n      }, function(__root) {\n        this.urls.forEach(function(url) {\n          return __root.buffer(__root.element(\"img\", this, {\n            \"src\": url\n          }, function(__root) {}));\n        });\n      }));\n    }));\n    return __root.root;\n  }).call(data);\n};\n",
+      "type": "blob"
+    },
+    "test/test": {
+      "path": "test/test",
+      "content": "(function() {\n  describe(\"Sample test\", function() {\n    return it(\"should test something\", function() {\n      return assert(true);\n    });\n  });\n\n}).call(this);\n",
       "type": "blob"
     },
     "lib/hamlet-runtime": {
