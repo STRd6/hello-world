@@ -20,7 +20,7 @@ A template is a function that returns a DOM node when invoked. Here we are
 passing data for the template to fill in.
 
     element = Template
-      name: "World"
+      name: "World9000"
 
 ## Writing to the HTML Document
 
