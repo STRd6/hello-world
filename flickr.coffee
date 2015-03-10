@@ -1,17 +1,18 @@
 # This package is declared in `pixie.cson`
 # We require it using the name defined there
-Observable = require "observable"
+Model = require "model"
 
 # Here we export the constructor for our model
-module.exports = ->
-  self =
-    query: Observable ""
-    urls: Observable []
+module.exports = (I={}, self=Model(I)) ->
+  self.attrObservable "query"
+  self.attrObservable "urls"
+
+  self.extend
     submit: (e) ->
       e.preventDefault()
 
       flickrAPI = "http://api.flickr.com/services/feeds/photos_public.gne?jsoncallback=?";
-  
+
       $.getJSON flickrAPI,
         tags: self.query()
         tagmode: "any"

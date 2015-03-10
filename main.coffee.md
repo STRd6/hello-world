@@ -42,6 +42,17 @@ You can modify the style yourself in `style.styl`
 
     document.head.appendChild style
 
+## Persist App Data Across Hot Reloads
+
+TODO: Is there a better way to do this than these crazy magical incantations?
+
+    global.appData = ->
+      ENV.APP_STATE
+
+    modelData = ENV.APP_STATE ?=
+      query: "hyperweb"
+      urls: []
+
 ## Flickr Search
 
 Here we require a model and a template then combine them to create an element
@@ -49,4 +60,4 @@ to add to the DOM that let's us search Flikr using their JSON API.
 
     Flickr = require "./flickr"
     FlickrTemplate = require "./templates/flickr"
-    document.body.appendChild FlickrTemplate Flickr()
+    document.body.appendChild FlickrTemplate Flickr(modelData)
