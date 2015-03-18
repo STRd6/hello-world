@@ -55,7 +55,7 @@ passing data for the template to fill in.</p>
 
             </div>
             <div class="content"><pre><code class="lang-coffeescript">element = Template
-  name: <span class="string">"World9000"</span></code></pre>
+  name: <span class="string">"Dudester"</span></code></pre>
 </div>
         </li>
         
@@ -87,7 +87,7 @@ the document head.</p>
 
             </div>
             <div class="content"><pre><code class="lang-coffeescript">style = document.createElement <span class="string">"style"</span>
-style.innerText = require <span class="string">"./style"</span>
+style.textContent = require <span class="string">"./style"</span>
 
 document.head.appendChild style</code></pre>
 </div>
@@ -99,33 +99,15 @@ document.head.appendChild style</code></pre>
               <div class="pilwrap">
                 <a class="pilcrow" href="#section-6">&#182;</a>
               </div>
-              <h2 id="persist-app-data-across-hot-reloads">Persist App Data Across Hot Reloads</h2>
-<p>TODO: Is there a better way to do this than these crazy magical incantations?</p>
-
-            </div>
-            <div class="content"><pre><code class="lang-coffeescript">global.<span class="function"><span class="title">appData</span></span> = -&gt;
-  ENV.APP_STATE
-
-modelData = ENV.APP_STATE ?=
-  query: <span class="string">"hyperweb"</span>
-  urls: []</code></pre>
-</div>
-        </li>
-        
-        
-        <li id="section-7">
-            <div class="annotation">
-              <div class="pilwrap">
-                <a class="pilcrow" href="#section-7">&#182;</a>
-              </div>
-              <h2 id="flickr-search">Flickr Search</h2>
+              <h2 id="persisting-application-data-across-reloads">Persisting Application Data Across Reloads</h2>
+<h2 id="flickr-search">Flickr Search</h2>
 <p>Here we require a model and a template then combine them to create an element
 to add to the DOM that let&#39;s us search Flikr using their JSON API.</p>
 
             </div>
             <div class="content"><pre><code class="lang-coffeescript">Flickr = require <span class="string">"./flickr"</span>
 FlickrTemplate = require <span class="string">"./templates/flickr"</span>
-document.body.appendChild FlickrTemplate Flickr(modelData)</code></pre>
+document.body.appendChild FlickrTemplate Flickr()</code></pre>
 </div>
         </li>
         

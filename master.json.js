@@ -2,13 +2,13 @@ window["STRd6/hello-world:master"]({
   "source": {
     "flickr.coffee": {
       "path": "flickr.coffee",
-      "content": "# This package is declared in `pixie.cson`\n# We require it using the name defined there\nModel = require \"model\"\n\n# Here we export the constructor for our model\nmodule.exports = (I={}, self=Model(I)) ->\n  self.attrObservable \"query\"\n  self.attrObservable \"urls\"\n\n  self.extend\n    submit: (e) ->\n      e.preventDefault()\n\n      flickrAPI = \"http://api.flickr.com/services/feeds/photos_public.gne?jsoncallback=?\";\n\n      $.getJSON flickrAPI,\n        tags: self.query()\n        tagmode: \"any\"\n        format: \"json\"\n      .then (data) ->\n        self.urls data.items.map (item) ->\n          item.media.m\n",
+      "content": "# This package is declared in `pixie.cson`\n# We require it using the name defined there\nObservable = require \"observable\"\n\n# Here we export the constructor for our model\nmodule.exports = (I) ->\n  self =\n    query: Observable \"\"\n    urls: Observable []\n    submit: (e) ->\n      e.preventDefault()\n\n      flickrAPI = \"http://api.flickr.com/services/feeds/photos_public.gne?jsoncallback=?\"\n\n      $.getJSON flickrAPI,\n        tags: self.query()\n        tagmode: \"any\"\n        format: \"json\"\n      .then (data) ->\n        self.urls data.items.map (item) ->\n          item.media.m\n",
       "mode": "100644",
       "type": "blob"
     },
     "main.coffee.md": {
       "path": "main.coffee.md",
-      "content": "# Hello World\r\n\r\nWelcome to HyperWeb. Where you can create clientside applications easier and\r\nbetter than ever before.\r\n\r\n    # main.coffee.md\r\n\r\n## Require\r\n\r\nYou can require other files just like you do in Node or other server-side\r\nenvironments.\r\n\r\nHere we are requiring a Hamlet template file.\r\n\r\n    Template = require \"./template\"\r\n\r\n## Templates\r\n\r\nA template is a function that returns a DOM node when invoked. Here we are\r\npassing data for the template to fill in.\r\n\r\n    element = Template\r\n      name: \"World9000\"\r\n\r\n## Writing to the HTML Document\r\n\r\nThe simplest way to add to the document is to append a child to the body node.\r\n\r\n    document.body.appendChild element\r\n\r\n## Styling the HTML Document\r\n\r\nTo apply a stylesheet to your document you can create a `style` node.\r\n\r\nHere we use a .styl file, which compiles into css text that we then attach to\r\nthe document head.\r\n\r\nYou can modify the style yourself in `style.styl`\r\n\r\n    style = document.createElement \"style\"\r\n    style.innerText = require \"./style\"\r\n\r\n    document.head.appendChild style\r\n\r\n## Persist App Data Across Hot Reloads\r\n\r\nTODO: Is there a better way to do this than these crazy magical incantations?\r\n\r\n    global.appData = ->\r\n      ENV.APP_STATE\r\n\r\n    modelData = ENV.APP_STATE ?=\r\n      query: \"hyperweb\"\r\n      urls: []\r\n\r\n## Flickr Search\r\n\r\nHere we require a model and a template then combine them to create an element\r\nto add to the DOM that let's us search Flikr using their JSON API.\r\n\r\n    Flickr = require \"./flickr\"\r\n    FlickrTemplate = require \"./templates/flickr\"\r\n    document.body.appendChild FlickrTemplate Flickr(modelData)\r\n",
+      "content": "# Hello World\n\nWelcome to HyperWeb. Where you can create clientside applications easier and\nbetter than ever before.\n\n    # main.coffee.md\n\n## Require\n\nYou can require other files just like you do in Node or other server-side\nenvironments.\n\nHere we are requiring a Hamlet template file.\n\n    Template = require \"./template\"\n\n## Templates\n\nA template is a function that returns a DOM node when invoked. Here we are\npassing data for the template to fill in.\n\n    element = Template\n      name: \"Dudester\"\n\n## Writing to the HTML Document\n\nThe simplest way to add to the document is to append a child to the body node.\n\n    document.body.appendChild element\n\n## Styling the HTML Document\n\nTo apply a stylesheet to your document you can create a `style` node.\n\nHere we use a .styl file, which compiles into css text that we then attach to\nthe document head.\n\nYou can modify the style yourself in `style.styl`\n\n    style = document.createElement \"style\"\n    style.textContent = require \"./style\"\n\n    document.head.appendChild style\n\n## Persisting Application Data Across Reloads\n\n## Flickr Search\n\nHere we require a model and a template then combine them to create an element\nto add to the DOM that let's us search Flikr using their JSON API.\n\n    Flickr = require \"./flickr\"\n    FlickrTemplate = require \"./templates/flickr\"\n    document.body.appendChild FlickrTemplate Flickr()\n",
       "mode": "100644",
       "type": "blob"
     },
@@ -20,13 +20,13 @@ window["STRd6/hello-world:master"]({
     },
     "style.styl": {
       "path": "style.styl",
-      "content": "*\r\n  box-sizing: border-box\r\n\r\nhtml, body\r\n  height: 100%\r\n\r\nbody\r\n  font-family: \"HelveticaNeue-Light\", \"Helvetica Neue Light\", \"Helvetica Neue\", Helvetica, Arial, \"Lucida Grande\", sans-serif\r\n  font-weight: 300\r\n  color: #444\r\n  margin: 1em\r\n",
+      "content": "*\n  box-sizing: border-box\n\nhtml, body\n  height: 100%\n\nbody\n  font-family: \"HelveticaNeue-Light\", \"Helvetica Neue Light\", \"Helvetica Neue\", Helvetica, Arial, \"Lucida Grande\", sans-serif\n  font-weight: 300\n  color: #335533\n  margin: 1em\n  background: #3cc\n  \nh1\n  transform: rotate(-90deg) \n  display: inline-block\n  box-shadow: 13px 0px 30px 30px rgba(238,238,238,.5)\n  background-color: #eee\n  color: rgb(161,55,161)\n\nh2\n  box-shadow: 10px 10px 35px 0px rgba(161,55,161,1)\n  background-color: rgb(161,55,161)\n  color: #ccc\n",
       "mode": "100644",
       "type": "blob"
     },
     "template.haml": {
       "path": "template.haml",
-      "content": "%div\n  %h1 Hello\n  %p= @name\n  \n  %h2 Welcome...\n  %p to the future!\n",
+      "content": "%div\n  %h1 Hello\n  %h1 hello world\n  %p= @name\n  \n  %h2 Welcome...\n  %p to the future!\n",
       "mode": "100644",
       "type": "blob"
     },
@@ -46,12 +46,12 @@ window["STRd6/hello-world:master"]({
   "distribution": {
     "flickr": {
       "path": "flickr",
-      "content": "(function() {\n  var Model;\n\n  Model = require(\"model\");\n\n  module.exports = function(I, self) {\n    if (I == null) {\n      I = {};\n    }\n    if (self == null) {\n      self = Model(I);\n    }\n    self.attrObservable(\"query\");\n    self.attrObservable(\"urls\");\n    return self.extend({\n      submit: function(e) {\n        var flickrAPI;\n        e.preventDefault();\n        flickrAPI = \"http://api.flickr.com/services/feeds/photos_public.gne?jsoncallback=?\";\n        return $.getJSON(flickrAPI, {\n          tags: self.query(),\n          tagmode: \"any\",\n          format: \"json\"\n        }).then(function(data) {\n          return self.urls(data.items.map(function(item) {\n            return item.media.m;\n          }));\n        });\n      }\n    });\n  };\n\n}).call(this);\n",
+      "content": "(function() {\n  var Observable;\n\n  Observable = require(\"observable\");\n\n  module.exports = function(I) {\n    var self;\n    return self = {\n      query: Observable(\"\"),\n      urls: Observable([]),\n      submit: function(e) {\n        var flickrAPI;\n        e.preventDefault();\n        flickrAPI = \"http://api.flickr.com/services/feeds/photos_public.gne?jsoncallback=?\";\n        return $.getJSON(flickrAPI, {\n          tags: self.query(),\n          tagmode: \"any\",\n          format: \"json\"\n        }).then(function(data) {\n          return self.urls(data.items.map(function(item) {\n            return item.media.m;\n          }));\n        });\n      }\n    };\n  };\n\n}).call(this);\n",
       "type": "blob"
     },
     "main": {
       "path": "main",
-      "content": "(function() {\n  var Flickr, FlickrTemplate, Template, element, modelData, style;\n\n  Template = require(\"./template\");\n\n  element = Template({\n    name: \"World9000\"\n  });\n\n  document.body.appendChild(element);\n\n  style = document.createElement(\"style\");\n\n  style.innerText = require(\"./style\");\n\n  document.head.appendChild(style);\n\n  global.appData = function() {\n    return ENV.APP_STATE;\n  };\n\n  modelData = ENV.APP_STATE != null ? ENV.APP_STATE : ENV.APP_STATE = {\n    query: \"hyperweb\",\n    urls: []\n  };\n\n  Flickr = require(\"./flickr\");\n\n  FlickrTemplate = require(\"./templates/flickr\");\n\n  document.body.appendChild(FlickrTemplate(Flickr(modelData)));\n\n}).call(this);\n",
+      "content": "(function() {\n  var Flickr, FlickrTemplate, Template, element, style;\n\n  Template = require(\"./template\");\n\n  element = Template({\n    name: \"Dudester\"\n  });\n\n  document.body.appendChild(element);\n\n  style = document.createElement(\"style\");\n\n  style.textContent = require(\"./style\");\n\n  document.head.appendChild(style);\n\n  Flickr = require(\"./flickr\");\n\n  FlickrTemplate = require(\"./templates/flickr\");\n\n  document.body.appendChild(FlickrTemplate(Flickr()));\n\n}).call(this);\n",
       "type": "blob"
     },
     "pixie": {
@@ -61,12 +61,12 @@ window["STRd6/hello-world:master"]({
     },
     "style": {
       "path": "style",
-      "content": "module.exports = \"* {\\n  -ms-box-sizing: border-box;\\n  -moz-box-sizing: border-box;\\n  -webkit-box-sizing: border-box;\\n  box-sizing: border-box;\\n}\\n\\nhtml,\\nbody {\\n  height: 100%;\\n}\\n\\nbody {\\n  font-family: \\\"HelveticaNeue-Light\\\", \\\"Helvetica Neue Light\\\", \\\"Helvetica Neue\\\", Helvetica, Arial, \\\"Lucida Grande\\\", sans-serif;\\n  font-weight: 300;\\n  color: #444;\\n  margin: 1em;\\n}\";",
+      "content": "module.exports = \"* {\\n  -ms-box-sizing: border-box;\\n  -moz-box-sizing: border-box;\\n  -webkit-box-sizing: border-box;\\n  box-sizing: border-box;\\n}\\n\\nhtml,\\nbody {\\n  height: 100%;\\n}\\n\\nbody {\\n  font-family: \\\"HelveticaNeue-Light\\\", \\\"Helvetica Neue Light\\\", \\\"Helvetica Neue\\\", Helvetica, Arial, \\\"Lucida Grande\\\", sans-serif;\\n  font-weight: 300;\\n  color: #335533;\\n  margin: 1em;\\n  background: #3cc;\\n}\\n\\nh1 {\\n  display: inline-block;\\n  box-shadow: 13px 0px 30px 30px rgba(238, 238, 238, .5);\\n  background-color: #eee;\\n  color: rgb(161,55,161);\\n  -ms-transform: rotate(-90deg);\\n  -moz-transform: rotate(-90deg);\\n  -webkit-transform: rotate(-90deg);\\n  transform: rotate(-90deg);\\n}\\n\\nh2 {\\n  box-shadow: 10px 10px 35px 0px rgba(161, 55, 161, 1);\\n  background-color: rgb(161,55,161);\\n  color: #ccc;\\n}\";",
       "type": "blob"
     },
     "template": {
       "path": "template",
-      "content": "module.exports = function(data) {\n  \"use strict\";\n  return (function() {\n    var __root;\n    __root = require(\"/lib/hamlet-runtime\")(this);\n    __root.buffer(__root.element(\"div\", this, {}, function(__root) {\n      __root.buffer(__root.element(\"h1\", this, {}, function(__root) {\n        __root.buffer(\"Hello\\n\");\n      }));\n      __root.buffer(__root.element(\"p\", this, {}, function(__root) {\n        __root.buffer(this.name);\n      }));\n      __root.buffer(__root.element(\"h2\", this, {}, function(__root) {\n        __root.buffer(\"Welcome...\\n\");\n      }));\n      __root.buffer(__root.element(\"p\", this, {}, function(__root) {\n        __root.buffer(\"to the future!\\n\");\n      }));\n    }));\n    return __root.root;\n  }).call(data);\n};\n",
+      "content": "module.exports = function(data) {\n  \"use strict\";\n  return (function() {\n    var __root;\n    __root = require(\"/lib/hamlet-runtime\")(this);\n    __root.buffer(__root.element(\"div\", this, {}, function(__root) {\n      __root.buffer(__root.element(\"h1\", this, {}, function(__root) {\n        __root.buffer(\"Hello\\n\");\n      }));\n      __root.buffer(__root.element(\"h1\", this, {}, function(__root) {\n        __root.buffer(\"hello world\\n\");\n      }));\n      __root.buffer(__root.element(\"p\", this, {}, function(__root) {\n        __root.buffer(this.name);\n      }));\n      __root.buffer(__root.element(\"h2\", this, {}, function(__root) {\n        __root.buffer(\"Welcome...\\n\");\n      }));\n      __root.buffer(__root.element(\"p\", this, {}, function(__root) {\n        __root.buffer(\"to the future!\\n\");\n      }));\n    }));\n    return __root.root;\n  }).call(data);\n};\n",
       "type": "blob"
     },
     "templates/flickr": {
@@ -86,7 +86,7 @@ window["STRd6/hello-world:master"]({
     }
   },
   "progenitor": {
-    "url": "http://hyperweb.space/?repo=STRd6/hello-world"
+    "url": "http://hyperweb.space/collaborative-editing/?repo=STRd6/hello-world"
   },
   "entryPoint": "main",
   "remoteDependencies": [
