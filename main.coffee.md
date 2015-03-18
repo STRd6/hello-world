@@ -20,7 +20,7 @@ A template is a function that returns a DOM node when invoked. Here we are
 passing data for the template to fill in.
 
     element = Template
-      name: "World9000"
+      name: "Dudester"
 
 ## Writing to the HTML Document
 
@@ -38,20 +38,11 @@ the document head.
 You can modify the style yourself in `style.styl`
 
     style = document.createElement "style"
-    style.innerText = require "./style"
+    style.textContent = require "./style"
 
     document.head.appendChild style
 
-## Persist App Data Across Hot Reloads
-
-TODO: Is there a better way to do this than these crazy magical incantations?
-
-    global.appData = ->
-      ENV.APP_STATE
-
-    modelData = ENV.APP_STATE ?=
-      query: "hyperweb"
-      urls: []
+## Persisting Application Data Across Reloads
 
 ## Flickr Search
 
@@ -60,4 +51,4 @@ to add to the DOM that let's us search Flikr using their JSON API.
 
     Flickr = require "./flickr"
     FlickrTemplate = require "./templates/flickr"
-    document.body.appendChild FlickrTemplate Flickr(modelData)
+    document.body.appendChild FlickrTemplate Flickr()
