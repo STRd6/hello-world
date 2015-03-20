@@ -1,0 +1,12 @@
+CACHE MANIFEST
+# 1426876562711
+
+CACHE:
+index.html
+../yolo.json.js
+https://code.jquery.com/jquery-1.11.0.min.js
+
+NETWORK:
+https://*
+http://*
+*
